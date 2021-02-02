@@ -18,10 +18,7 @@ public class CLI {
 
             switch (commands[0]) {
                 case "RJ":
-                    String name = "";
-                    for (int i = 1; i < commands.length; i++) {
-                        name += commands[i] + " ";
-                    }
+                    String name = commands[1];
                     if(controller.hasPlayerName(name)){
                         System.out.println("Jogador existente.");
                     } else {
@@ -30,18 +27,16 @@ public class CLI {
                     }
                     break;
                 case "EJ":
-                    name = "";
-                    for (int i = 1; i < commands.length; i++) {
-                        name += commands[i] + " ";
-                    }
-                    if(controller.hasPlayerName(name)){
-                        System.out.println("Jogador existente.");
+                    name = commands[1];
+                    if(!controller.hasPlayerName(name)){
+                        System.out.println("Jogador não existente.");
                     }
                     else if(controller.isPlayerInActiveGame(name)){
                         System.out.println("Jogador participa no jogo em curso.");
                     }
                     else{
                         controller.removePlayer(name);
+                        System.out.println("Jogador removido com sucesso.");
                     }
                     break;
                 case "LJ":
@@ -171,7 +166,7 @@ public class CLI {
                     else{
                         List<OngoingScore> score = controller.getOngoingScoreList();
                         for (OngoingScore ongoingScore : score) {
-                            System.out.println(score.getPlayerName() + " " + score.getShots() + " " + score.getShotsOnBoats() + " " + score.getSunkedShips());
+                            System.out.println(ongoingScore.getPlayerName() + " " + ongoingScore.getShots() + " " + ongoingScore.getShotsOnBoats() + " " + ongoingScore.getSunkedShips());
                         }
                     }
                     break;
