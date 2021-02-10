@@ -4,7 +4,7 @@ import ual.models.tables.Position;
 
 import java.util.List;
 
-public interface Boat {
+public interface Boat extends TablePiece{
 
     String getName();
     String getCode();

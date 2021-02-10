@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.Arrays;
 
 public class TableClass implements Table{
-    private Boat[][] table;
+    private TablePiece[][] table;
     private List<Boat> speedboats;
     private List<Boat> submarines;
     private List<Boat> frigates;
@@ -177,7 +177,7 @@ public class TableClass implements Table{
     public void removeBoat(String tableLine, String tableColumn) {
         Integer posX = this.translatePosX(tableColumn);
         Integer posY = this.translatePosY(tableLine);
-        Boat boat = this.table[posY][posX];
+        Boat boat = (Boat) this.table[posY][posX];
         List<Position> positions = boat.getPositionsArray();
         for(Position position: positions){
             Integer modPosX = position.getPosX();
@@ -197,7 +197,7 @@ public class TableClass implements Table{
     public String getShotAt(String tableLine, String tableColumn) {
         Integer posX = this.translatePosX(tableColumn);
         Integer posY = this.translatePosY(tableLine);
-        Boat placeOnTable = this.table[posY][posX];
+        Boat placeOnTable = (Boat) this.table[posY][posX];
         this.score.addShot();
         if(placeOnTable == null){
             this.table[posY][posX] = new Shot();

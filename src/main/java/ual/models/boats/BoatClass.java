@@ -3,7 +3,7 @@ package ual.models.boats;
 import ual.models.tables.*;
 import java.util.*;
 
-public class BoatClass implements Boat{
+public class BoatClass implements Boat, TablePiece{
     private String name;
     private String code;
     private Integer size;

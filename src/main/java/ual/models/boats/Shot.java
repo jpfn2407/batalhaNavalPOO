@@ -4,7 +4,7 @@ import ual.models.tables.Position;
 
 import java.util.List;
 
-public class Shot implements Boat{
+public class Shot implements TablePiece{
     private String name;
     private String code;
     private Integer size;
@@ -24,26 +24,6 @@ public class Shot implements Boat{
 
     public Integer getSize() {
         return this.size;
-    }
-
-    public void addPosition(Integer posX, Integer posY) {
-
-    }
-
-    public boolean hasValue(Integer posX, Integer posY) {
-        return false;
-    }
-
-    public void removePosition(Integer posX, Integer posY) {
-
-    }
-
-    public List<Position> getPositionsArray() {
-        return null;
-    }
-
-    public boolean hasPositionsLeft() {
-        return false;
     }
 
 }
