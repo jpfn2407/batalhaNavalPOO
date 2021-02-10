@@ -109,6 +109,10 @@ public class ControllerClass implements Controller{
         return this.gameLogic.getOngoingScoreList();
     }
 
+    public void printHiddenTable() {
+        this.gameLogic.printHiddenTable();
+    }
+
     /////////////////////////////////
     public void printDebugTable(String player){
         this.gameLogic.printDebugTable(player);
