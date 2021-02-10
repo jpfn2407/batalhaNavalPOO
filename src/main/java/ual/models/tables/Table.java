@@ -22,4 +22,8 @@ public interface Table {
     boolean hasBoatsLeftToPlay();
 
     OngoingScore getOngoingScore(Player player);
+
+    void printTable();
+
+    void printHiddenTable();
 }

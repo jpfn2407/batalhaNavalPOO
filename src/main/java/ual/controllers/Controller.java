@@ -51,6 +51,8 @@ public interface Controller {
 
     void hasBoatsLeftToPlay(String player);
 
+    void printHiddenTable();
+
     //////////////////////////////////
 
     void printDebugTable(String player);

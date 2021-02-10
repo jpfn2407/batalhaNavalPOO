@@ -1,6 +1,7 @@
 package ual.models;
 
 import ual.models.players.Player;
+import ual.models.tables.Hidden;
 import ual.models.tables.OngoingScore;
 import ual.models.tables.TableClass;
 
@@ -14,6 +15,7 @@ public class GameLogic {
     private Player player1;
     private Player player2;
     private Map<String, TableClass> tables;
+    private Map<String, Hidden> hiddenTable;
     private boolean gameIsOn;
     private boolean warIsOn;
     private Player turn;
@@ -24,6 +26,7 @@ public class GameLogic {
         this.player1 = null;
         this.player2 = null;
         this.tables = new HashMap<>();
+        this.hiddenTable = new HashMap<>();
     }
 
     public boolean playerIsInGame(String name) {
@@ -44,10 +47,13 @@ public class GameLogic {
     public void startGame(Player player1, Player player2){
         this.gameIsOn = true;
         this.tables = new HashMap<>();
+        this.hiddenTable = new HashMap<>();
         this.player1 = player1;
         this.player2 = player2;
         this.tables.put(player1.getName(), new TableClass());
         this.tables.put(player2.getName(), new TableClass());
+        this.hiddenTable.put(player1.getName(), new Hidden());
+        this.hiddenTable.put(player2.getName(), new Hidden());
         this.warIsOn = false;
     }
 
@@ -84,6 +90,7 @@ public class GameLogic {
         this.player1 = null;
         this.player2 = null;
         this.tables = new HashMap<>();
+        this.hiddenTable = new HashMap<>();
         this.gameIsOn = false;
         this.warIsOn = false;
     }
@@ -164,6 +171,14 @@ public class GameLogic {
         scoreboard.add(this.tables.get(player2.getName()).getOngoingScore(player1));
         scoreboard.add(this.tables.get(player1.getName()).getOngoingScore(player2));
         return scoreboard;
+    }
+
+    public void printHiddenTable() {
+        if(this.player1.getName().equals(this.turn.getName())){
+            this.tables.get(this.player2.getName()).printHiddenTable();
+        } else {
+            this.tables.get(this.player1.getName()).printHiddenTable();
+        }
     }
 
     //////////////////////////////

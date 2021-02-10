@@ -74,6 +74,7 @@ public class CLI {
                     else{
                         controller.startWar();
                         System.out.println("Combate iniciado.");
+                        controller.printHiddenTable();
                     }
                     break;
                 case "D":
@@ -165,6 +166,7 @@ public class CLI {
                     else{
                         System.out.println(controller.shoot(player, tableLine, tableColumn));
                         controller.hasBoatsLeftToPlay(player);
+                        controller.printHiddenTable();
                     }
                     break;
                 case "V":
