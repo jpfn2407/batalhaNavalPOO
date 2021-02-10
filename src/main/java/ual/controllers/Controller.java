@@ -35,13 +35,25 @@ public interface Controller {
 
     void placeBoat(String player, String type, String tableLine, String tableColumn, String tableOrientation);
 
-    boolean isBoatInThisPosition(String tableLine, String tableColumn);
+    boolean isBoatInThisPosition(String player, String tableLine, String tableColumn);
 
     void removeBoat(String player, String tableLine, String tableColumn);
 
     boolean isWarActive();
 
-    boolean shoot(String player, String tableLine, String tableColumn);
+    String shoot(String player, String tableLine, String tableColumn);
 
     List<OngoingScore> getOngoingScoreList();
+
+    boolean isPlayerTurn(String player);
+
+    boolean isShotAtAlreadyShotSpot(String player, String tableLine, String tableColumn);
+
+    void hasBoatsLeftToPlay(String player);
+
+    //////////////////////////////////
+
+    void printDebugTable(String player);
+
+    void debugSet(String player, String tableColumn, String tableLine);
 }

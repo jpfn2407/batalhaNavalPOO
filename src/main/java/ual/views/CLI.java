@@ -56,8 +56,8 @@ public class CLI {
                     if(controller.isGameActive()){
                         System.out.println("Existe um jogo em curso.");
                     }
-                    else if(controller.hasPlayerName(player1) || controller.hasPlayerName(player2)){
-                        System.out.println("Jogadores não registados.");
+                    else if(!controller.hasPlayerName(player1) || !controller.hasPlayerName(player2) || player1.equals(player2)){
+                        System.out.println("Jogadores não registados ou repetidos.");
                     }
                     else{
                         controller.startGame(player1, player2);
@@ -79,11 +79,11 @@ public class CLI {
                 case "D":
                     player1 = commands[1];
                     player2 = null;
-                    if(commands.length == 2) player2 = commands[2];
+                    if(commands.length == 3) player2 = commands[2];
                     if (!controller.isGameActive()){
                         System.out.println("Não existe jogo em curso.");
                     }
-                    else if(!controller.isPlayerInActiveGame(player1) || !controller.isPlayerInActiveGame(player2)){
+                    else if(!controller.isPlayerInActiveGame(player1) || (player2!= null && !controller.isPlayerInActiveGame(player2))){
                         System.out.println("Jogador não participa no jogo em curso.");
                     }
                     else{
@@ -97,14 +97,18 @@ public class CLI {
                     String tableLine = commands[3];
                     String tableColumn = commands[4];
                     String tableOrientation = null;
-                    if(commands.length == 5) tableOrientation = commands[5];
+                    if(commands.length == 6) tableOrientation = commands[5];
+                    if(tableOrientation == null) tableOrientation = "N";
                     if (!controller.isGameActive()){
                         System.out.println("Não existe jogo em curso.");
+                    }
+                    else if(controller.isWarActive()){
+                        System.out.println("Combate em curso.");
                     }
                     else if(!controller.isPlayerInActiveGame(player)){
                         System.out.println("Jogador não participa no jogo em curso.");
                     }
-                    else if(!controller.isBoatInsideTable(tableLine, tableColumn)){
+                    else if(!controller.isBoatInsideTable(tableColumn, tableLine)){
                         System.out.println("Posição irregular.");
                     }
                     else if(!controller.hasBoatTypeLeftToPlace(player, type)){
@@ -125,10 +129,13 @@ public class CLI {
                     if (!controller.isGameActive()){
                         System.out.println("Não existe jogo em curso.");
                     }
+                    else if(controller.isWarActive()){
+                        System.out.println("Combate em curso.");
+                    }
                     else if(!controller.isPlayerInActiveGame(player)){
                         System.out.println("Jogador não participa no jogo em curso.");
                     }
-                    else if(!controller.isBoatInThisPosition(tableLine, tableColumn) && controller.isBoatInsideTable(tableLine, tableColumn)){
+                    else if(!controller.isBoatInThisPosition(player, tableLine, tableColumn) && controller.isBoatInsideTable(tableColumn, tableLine)){
                         System.out.println("Não existe navio na posição.");
                     }
                     else{
@@ -149,11 +156,15 @@ public class CLI {
                     else if(!controller.isPlayerInActiveGame(player)){
                         System.out.println("Jogador não participa no jogo em curso.");
                     }
-                    else if(!controller.isBoatInsideTable(tableLine, tableColumn)){
-                        System.out.println("Posição irregular.");
+                    else if(!controller.isBoatInsideTable(tableColumn, tableLine) || controller.isShotAtAlreadyShotSpot(player, tableLine, tableColumn)){
+                    System.out.println("Posição irregular.");
+                    }
+                    else if(!controller.isPlayerTurn(player)){
+                        System.out.println("Não é a sua vez de jogar.");
                     }
                     else{
                         System.out.println(controller.shoot(player, tableLine, tableColumn));
+                        controller.hasBoatsLeftToPlay(player);
                     }
                     break;
                 case "V":
@@ -174,6 +185,13 @@ public class CLI {
                     break;
                 case "L":
                     break;
+
+                case "debug":
+                    player = commands[1];
+                    //System.out.println("Y:" + (Integer.parseInt(tableLine) - 1) + " X:" + (((int)tableColumn.toCharArray()[0]) - 'A' ));
+                    controller.printDebugTable(player);
+                    break;
+
                 default:
                     System.out.println("Instrução invalida.");
             }

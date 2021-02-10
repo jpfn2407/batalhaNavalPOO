@@ -23,4 +23,12 @@ public class Player {
     public Integer getVictories() {
         return this.gamesVictories;
     }
+
+    public void addGamePlayed(){
+        this.gamesPlayed += 1;
+    }
+
+    public void addVictory(){
+        this.gamesVictories += 1;
+    }
 }
