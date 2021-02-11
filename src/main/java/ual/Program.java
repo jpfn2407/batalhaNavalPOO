@@ -1,10 +1,11 @@
 package ual;
 import ual.views.*;
+import ual.views.GUI.Menu;
+import javax.swing.*;
 
 public class Program {
     public static void main(String[] args) {
-        /*GUI gui = new GUI();
-        gui.main(args);*/
-        new CLI();
+        //new CLI();
+        new Menu();
     }
 }
