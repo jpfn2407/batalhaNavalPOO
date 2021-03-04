@@ -35,6 +35,32 @@ public class CLI {
                     break;
                 case "V":
                     break;
+<<<<<<< Updated upstream
+=======
+
+                case "G":
+                    String fileName = commands[1];
+                    controller.saveFile(fileName);
+                    System.out.println("Ficheiro gravado com sucesso.");
+                    break;
+
+                case "L":
+                    fileName = commands[1];
+                    try {
+                        controller = Controller.loadFile(fileName);
+                        System.out.println("Ficheiro lido com sucesso.");
+                    } catch (Exception e) {
+                        System.out.println("Ficheiro inexistente.");
+                    }
+                    break;
+
+                case "debug":
+                    player = commands[1];
+                    //System.out.println("Y:" + (Integer.parseInt(tableLine) - 1) + " X:" + (((int)tableColumn.toCharArray()[0]) - 'A' ));
+                    controller.printDebugTable(player);
+                    break;
+
+>>>>>>> Stashed changes
                 default:
                     System.out.println("Instrução invalida.");
             }
