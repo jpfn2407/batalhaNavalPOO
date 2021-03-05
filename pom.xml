@@ -6,7 +6,7 @@
 
   <groupId>ual</groupId>
   <artifactId>batalhaNaval</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>1.1-SNAPSHOT</version>
 
   <name>batalhaNaval</name>
   <!-- FIXME change it to the project's website -->
@@ -67,7 +67,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>ual.Program</mainClass>
+                <mainClass>ual.views.NUI.Client</mainClass>
               </manifest>
             </archive>
           </configuration>
