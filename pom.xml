@@ -67,7 +67,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>ual.views.NUI.Client</mainClass>
+                <mainClass>ual.views.NUI.Server</mainClass>
               </manifest>
             </archive>
           </configuration>

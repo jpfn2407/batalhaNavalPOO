@@ -1,6 +1,6 @@
 package ual.views.NUI;
 
-import com.dosse.upnp.UPnP;
+//import com.dosse.upnp.UPnP;
 import ual.controllers.Controller;
 import ual.controllers.ControllerClass;
 import ual.models.players.Player;
@@ -16,31 +16,20 @@ import java.util.Scanner;
 
 public class Server {
     public static void main(String[] args) {
+        /*System.out.println("Attempting UPnP port forwarding...");
+        if (UPnP.isUPnPAvailable()) { //is UPnP available?
+            if (UPnP.isMappedTCP(4242)) { //is the port already mapped?
+                System.out.println("UPnP port forwarding not enabled: port is already mapped");
+            } else if (UPnP.openPortTCP(4242)) { //try to map port
+                System.out.println("UPnP port forwarding enabled");
+            } else {
+                System.out.println("UPnP port forwarding failed");
+            }
+        } else {
+            System.out.println("UPnP is not available");
+        }*/
         Controller controller = new ControllerClass();
         while (true){
-
-            try {
-                Class.forName("com.dosse.upnp.UPnP");
-                System.out.println("UPnP library loaded.");
-            } catch (Exception e1) {
-                System.err.println("Couldn't find library.");
-                System.err.println(e1);
-                System.exit(1);
-            }
-
-            System.out.println("Attempting UPnP port forwarding...");
-            if (UPnP.isUPnPAvailable()) { //is UPnP available?
-                if (UPnP.isMappedTCP(4242)) { //is the port already mapped?
-                    System.out.println("UPnP port forwarding not enabled: port is already mapped");
-                } else if (UPnP.openPortTCP(4242)) { //try to map port
-                    System.out.println("UPnP port forwarding enabled");
-                } else {
-                    System.out.println("UPnP port forwarding failed");
-                }
-            } else {
-                System.out.println("UPnP is not available");
-            }
-
 
             try {
                 ServerSocket serverSocket = new ServerSocket(4242);
