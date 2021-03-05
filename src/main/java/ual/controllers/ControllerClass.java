@@ -5,6 +5,9 @@ import ual.models.PlayersList;
 import ual.models.players.Player;
 import ual.models.tables.OngoingScore;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.List;
 
 public class ControllerClass implements Controller{
@@ -111,6 +114,19 @@ public class ControllerClass implements Controller{
 
     public void printHiddenTable() {
         this.gameLogic.printHiddenTable();
+    }
+
+    public void saveFile(String fileName) {
+        try{
+            FileOutputStream fileOutputStream = new FileOutputStream(fileName);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            objectOutputStream.writeObject(this);
+            objectOutputStream.close();
+            fileOutputStream.close();
+        }
+        catch (IOException ioe){
+            ioe.printStackTrace();
+        }
     }
 
     /////////////////////////////////

@@ -3,6 +3,9 @@ package ual.controllers;
 import ual.models.players.Player;
 import ual.models.tables.OngoingScore;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.List;
 
 public interface Controller {
@@ -52,6 +55,17 @@ public interface Controller {
     void hasBoatsLeftToPlay(String player);
 
     void printHiddenTable();
+
+    void saveFile(String fileName);
+
+    static Controller loadFile(String fileName) throws IOException, ClassNotFoundException {
+        FileInputStream fileInputStream = new FileInputStream(fileName);
+        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+        Controller c = (Controller) objectInputStream.readObject();
+        objectInputStream.close();
+        fileInputStream.close();
+        return c;
+    }
 
     //////////////////////////////////
 

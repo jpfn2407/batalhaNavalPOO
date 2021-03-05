@@ -183,9 +183,21 @@ public class CLI {
                         }
                     }
                     break;
+
                 case "G":
+                    String fileName = commands[1];
+                    controller.saveFile(fileName);
+                    System.out.println("Ficheiro gravado com sucesso.");
                     break;
+
                 case "L":
+                    fileName = commands[1];
+                    try {
+                        controller = Controller.loadFile(fileName);
+                        System.out.println("Ficheiro lido com sucesso.");
+                    } catch (Exception e) {
+                        System.out.println("Ficheiro inexistente.");
+                    }
                     break;
 
                 case "debug":
