@@ -11,12 +11,15 @@ import java.util.Scanner;
 public class Client {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter server IP adress:");
+        String serverIP = scanner.nextLine();
+        System.out.println(" ");
         while (true){
             String line = scanner.nextLine();
             if (line.isBlank()) return;
 
             try {
-                Socket socket = new Socket("127.0.0.1", 4242);
+                Socket socket = new Socket(serverIP, 42069);
                 Scanner socketScanner = new Scanner(socket.getInputStream());
                 PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
                 printWriter.println(line);

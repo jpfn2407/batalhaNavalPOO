@@ -5,11 +5,19 @@ public class Player {
     private String name;
     private Integer gamesPlayed;
     private Integer gamesVictories;
+    private String ipAddress;
 
     public Player(String name){
         this.name = name;
         this.gamesPlayed = 0;
         this.gamesVictories = 0;
+    }
+
+    public Player(String name, String ipAddress){
+        this.name = name;
+        this.gamesPlayed = 0;
+        this.gamesVictories = 0;
+        this.ipAddress = ipAddress;
     }
 
     public String getName() {
