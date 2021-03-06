@@ -2,6 +2,7 @@ package ual.models;
 
 import ual.models.players.Player;
 
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,10 @@ public class PlayersList {
         this.playerMap.put(name, new Player(name));
     }
 
+    public void registerPlayer(String name, String clientAddress) {
+        this.playerMap.put(name, new Player(name, clientAddress));
+    }
+
     public void deletePlayer(String name) {
         this.playerMap.remove(name);
     }
@@ -33,5 +38,10 @@ public class PlayersList {
 
     public Player getPlayer(String name){
         return this.playerMap.get(name);
+    }
+
+
+    public boolean isIpLinkedWithName(String name, String clientAddress) {
+        return this.playerMap.get(name).getClientAddress().equals(clientAddress);
     }
 }

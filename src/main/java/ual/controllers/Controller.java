@@ -6,6 +6,7 @@ import ual.models.tables.OngoingScore;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.net.InetAddress;
 import java.util.List;
 
 public interface Controller {
@@ -13,6 +14,8 @@ public interface Controller {
     boolean hasPlayerName(String name);
 
     void registerPlayer(String name);
+
+    void registerPlayer(String name, String clientAddress);
     
     boolean isPlayerInActiveGame(String name);
 
@@ -67,9 +70,13 @@ public interface Controller {
         return c;
     }
 
+    boolean isIpLinkedWithName(String name, String clientAddress);
+
     //////////////////////////////////
 
     void printDebugTable(String player);
 
     void debugSet(String player, String tableColumn, String tableLine);
+
+
 }

@@ -8,6 +8,7 @@ import ual.models.tables.OngoingScore;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.util.List;
 
 public class ControllerClass implements Controller{
@@ -28,6 +29,10 @@ public class ControllerClass implements Controller{
         this.playersList.registerPlayer(name);
     }
 
+    public void registerPlayer(String name, String clientAddress) {
+        this.playersList.registerPlayer(name, clientAddress);
+    }
+
     public boolean isPlayerInActiveGame(String name) {
         return this.gameLogic.playerIsInGame(name);
     }
@@ -35,6 +40,7 @@ public class ControllerClass implements Controller{
     public void removePlayer(String name) {
         this.playersList.deletePlayer(name);
     }
+
 
     public List<Player> getPlayerList() {
         return this.playersList.getListOfPlayers();
@@ -127,6 +133,10 @@ public class ControllerClass implements Controller{
         catch (IOException ioe){
             ioe.printStackTrace();
         }
+    }
+
+    public boolean isIpLinkedWithName(String name, String clientAddress) {
+        return this.playersList.isIpLinkedWithName(name, clientAddress);
     }
 
     /////////////////////////////////

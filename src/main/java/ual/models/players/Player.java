@@ -1,11 +1,13 @@
 package ual.models.players;
 
+import java.net.InetAddress;
+
 public class Player {
 
     private String name;
     private Integer gamesPlayed;
     private Integer gamesVictories;
-    private String ipAddress;
+    private String clientAddress;
 
     public Player(String name){
         this.name = name;
@@ -13,11 +15,11 @@ public class Player {
         this.gamesVictories = 0;
     }
 
-    public Player(String name, String ipAddress){
+    public Player(String name, String clientAddress){
         this.name = name;
         this.gamesPlayed = 0;
         this.gamesVictories = 0;
-        this.ipAddress = ipAddress;
+        this.clientAddress = clientAddress;
     }
 
     public String getName() {
@@ -38,5 +40,9 @@ public class Player {
 
     public void addVictory(){
         this.gamesVictories += 1;
+    }
+
+    public String getClientAddress() {
+        return this.clientAddress;
     }
 }

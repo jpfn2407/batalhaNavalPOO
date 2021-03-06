@@ -14,9 +14,10 @@ public class Client {
         System.out.println("Enter server IP adress:");
         String serverIP = scanner.nextLine();
         System.out.println(" ");
+
         while (true){
             String line = scanner.nextLine();
-            if (line.isBlank()) return;
+            if (line.isEmpty()) return;
 
             try {
                 Socket socket = new Socket(serverIP, 42069);

@@ -7,35 +7,42 @@ import ual.models.players.Player;
 import ual.models.tables.OngoingScore;
 
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Server {
+
+    public static final int port = 42069;
 
     public static void main(String[] args) {
         System.out.println("Attempting UPnP port forwarding...");
         if (UPnP.isUPnPAvailable()) { //is UPnP available?
-            if (UPnP.isMappedTCP(42069)) { //is the port already mapped?
-                System.out.println("UPnP port forwarding not enabled: port is already mapped");
-            } else if (UPnP.openPortTCP(42069)) { //try to map port
-                System.out.println("UPnP port forwarding enabled");
+            if (UPnP.isMappedTCP(port)) { //is the port already mapped?
+                System.out.println("UPnP port forwarding not enabled: port " + port + " is already mapped.");
+            } else if (UPnP.openPortTCP(port)) { //try to map port
+                System.out.println("UPnP port forwarding enabled on port " + port);
             } else {
-                System.out.println("UPnP port forwarding failed");
+                System.out.println("UPnP port forwarding failed!");
             }
         } else {
-            System.out.println("UPnP is not available");
+            System.out.println("UPnP is not available.");
         }
+        System.out.println("!Server started!");
         Controller controller = new ControllerClass();
+        List<Socket> clients = new ArrayList<>();
         while (true){
             try {
-                ServerSocket serverSocket = new ServerSocket(42069);
+                ServerSocket serverSocket = new ServerSocket(port);
                 Socket socket = serverSocket.accept();
+                clients.add(socket);
                 InetAddress inetAddress = socket.getInetAddress();
-                System.out.println(inetAddress.getHostAddress());
+                String clientAddress = inetAddress.getHostAddress();
+                //System.out.println(inetAddress.getHostAddress());
                 Scanner scanner = new Scanner(socket.getInputStream());
                 PrintWriter printWriter = new PrintWriter(socket.getOutputStream());
                 String line = scanner.nextLine();
@@ -46,8 +53,9 @@ public class Server {
                     if (controller.hasPlayerName(name)) {
                         printWriter.println("Jogador existente.");
                     } else {
-                        controller.registerPlayer(name);
-                        printWriter.println("Jogador registado com sucesso.");
+                        controller.registerPlayer(name, clientAddress);
+                        printWriter.println("Jogador " + name + " registado com ip " + clientAddress + " .");
+                        System.out.println("New player: " + name + " / " + clientAddress);
                     }
                 }
                 else if (commands[0].equals("EJ") && commands.length == 2) {
@@ -56,9 +64,11 @@ public class Server {
                         printWriter.println("Jogador não existente.");
                     } else if (controller.isPlayerInActiveGame(name)) {
                         printWriter.println("Jogador participa no jogo em curso.");
+                    } else if (!controller.isIpLinkedWithName(name, clientAddress)){
+                        printWriter.println("Este IP não está associado ao jogador " + name + ". Impossivel apagar jogador.");
                     } else {
                         controller.removePlayer(name);
-                        printWriter.println("Jogador removido com sucesso.");
+                        printWriter.println("Jogador " + name + " removido com sucesso.");
                     }
                 }
                 else if (commands[0].equals("LJ") && commands.length == 1) {
@@ -80,7 +90,21 @@ public class Server {
                         printWriter.println("Jogadores não registados ou repetidos.");
                     } else {
                         controller.startGame(player1, player2);
-                        printWriter.println("Jogo iniciado entre " + player1 + " e " + player2 + ".");
+                        //printWriter.println("Jogo iniciado entre " + player1 + " e " + player2 + ".");
+                        System.out.println("check1");
+                        for(Socket clientSocket : clients){
+                            System.out.println("check2");
+                            if(!clientSocket.isClosed()){
+                                System.out.println("check3 " + clientSocket.isConnected());
+                                System.out.println(clientSocket.getOutputStream());
+                                System.out.println(clientSocket.getInetAddress().getHostAddress());
+                                clientSocket.getOutputStream();
+                                PrintWriter gameStartedWriter = new PrintWriter(clientSocket.getOutputStream());
+                                gameStartedWriter.println("Jogo iniciado entre " + player1 + " e " + player2 + ".");
+                                gameStartedWriter.flush();
+                            } else {
+                            }
+                        }
                     }
                 }
                 else if (commands[0].equals("IC") && commands.length == 1) {
@@ -186,6 +210,7 @@ public class Server {
                 }
                 printWriter.flush();
                 socket.close();
+                clients.remove(socket);
                 serverSocket.close();
             } catch (IOException e) {
                 e.printStackTrace();
